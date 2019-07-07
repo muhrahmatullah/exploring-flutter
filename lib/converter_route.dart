@@ -43,21 +43,29 @@ class _ConverterRouteState extends State<ConverterRoute> {
     // TODO: Once the build() function is inside the State object,
     // you'll have to reference this using `widget.units`
     final unitWidgets = widget.units.map((Unit unit) {
-      return Container(
-        color: widget.color,
-        margin: EdgeInsets.all(8.0),
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              unit.name,
-              style: Theme.of(context).textTheme.headline,
+      return Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            print(unit.name);
+          },
+          child: Container(
+            color: widget.color,
+            margin: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  unit.name,
+                  style: Theme.of(context).textTheme.headline,
+                ),
+                Text(
+                  'Conversion: ${unit.conversion}',
+                  style: Theme.of(context).textTheme.subhead,
+                )
+              ],
             ),
-            Text(
-              'Conversion: ${unit.conversion}',
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ],
+          ),
         ),
       );
     }).toList();
