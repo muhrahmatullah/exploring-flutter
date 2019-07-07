@@ -87,6 +87,10 @@ class CategoryRoute extends StatelessWidget {
   /// Makes the correct number of rows for the list view.
   ///
   /// For portrait, we construct a [ListView] from the list of category widgets.
+  /// For landscape, we construct a [GridView] with two collumn
+  ///
+  /// To check the device orientation we use MediaQuery which need context, thats
+  /// why we passed extra param context for it
   Widget _buildCategoryWidgets(List<Widget> categories, BuildContext context) {
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return ListView.builder(
