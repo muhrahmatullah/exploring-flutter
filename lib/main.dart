@@ -1,89 +1,40 @@
-import 'dart:convert';
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+// You can read about packages here: https://flutter.io/using-packages/
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
+// You can use a relative import, i.e. `import 'category.dart';` or
+// a package import, as shown below.
+// More details at http://dart-lang.github.io/linter/lints/avoid_relative_lib_imports.html
+import 'package:flutter_app_sample/category.dart';
+
+// TODO: Pass this information into your custom [Category] widget
+const _categoryName = 'Cake';
+const _categoryIcon = Icons.cake;
+const _categoryColor = Colors.green;
+
+/// The function that is called when main.dart is run.
 void main() {
-  runApp(SampleApp());
+  runApp(UnitConverterApp());
 }
 
-class SampleApp extends StatelessWidget {
+/// This widget is the root of our application.
+/// Currently, we just show one widget in our app.
+class UnitConverterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sample App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SampleAppPage(),
-    );
-  }
-}
-
-class SampleAppPage extends StatefulWidget {
-  SampleAppPage({Key key}) : super(key: key);
-
-  @override
-  _SampleAppPageState createState() => _SampleAppPageState();
-}
-
-class _SampleAppPageState extends State<SampleAppPage> {
-  List widgets = [];
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  showLoadingDialog() {
-    return widgets.length == 0;
-  }
-
-  getBody() {
-    if (showLoadingDialog()) {
-      return getProgressDialog();
-    } else {
-      return getListView();
-    }
-  }
-
-  getProgressDialog() {
-    return Center(child: CircularProgressIndicator());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Sample App"),
+      debugShowCheckedModeBanner: false,
+      title: 'Unit Converter',
+      home: Scaffold(
+        backgroundColor: Colors.green[100],
+        body: Center(
+          // TODO: Determine what properties you'll need to pass into the widget
+          child: Category(_categoryName, _categoryColor, _categoryIcon),
         ),
-        body: getBody());
-  }
-
-  ListView getListView() => ListView.builder(
-      itemCount: widgets.length,
-      itemBuilder: (BuildContext context, int position) {
-        return getRow(position);
-      });
-
-  Widget getRow(int i) {
-    return Padding(padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.all(4.0),
-              child: Text("${widgets[i]["title"]}")),
-            Text("${widgets[i]["body"]}")
-          ],
-        )
+      ),
     );
-  }
-
-  loadData() async {
-    String dataURL = "https://jsonplaceholder.typicode.com/posts";
-    http.Response response = await http.get(dataURL);
-    setState(() {
-      widgets = json.decode(response.body);
-    });
   }
 }
