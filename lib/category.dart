@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 ///
 ///
 
-var _rowHeight = 100.0;
-BorderRadius _borderRadius = BorderRadius.all(Radius.circular(70.0));
+final _rowHeight = 100.0;
+final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 
 class Category extends StatelessWidget {
   /// Creates a [Category].
@@ -23,9 +23,18 @@ class Category extends StatelessWidget {
   /// the UI, and the icon that represents it (e.g. a ruler).
   // TODO: You'll need the name, color, and iconLocation from main.dart
   final String name;
-  final MaterialColor color;
+  final ColorSwatch color;
   final IconData icon;
-  const Category(this.name, this.color, this.icon);
+  const Category(
+      {Key key,
+      @required this.name,
+      @required this.color,
+      @required this.icon
+      }): assert(name != null),
+        assert(color != null),
+        assert(icon != null),
+        super(key: key);
+
 
   /// Builds a custom widget that shows [Category] information.
   ///
@@ -44,29 +53,30 @@ class Category extends StatelessWidget {
         height: _rowHeight,
         child: InkWell(
           borderRadius: _borderRadius,
-          highlightColor: color[50],
-          splashColor: Colors.green,
+          highlightColor: color,
+          splashColor: color,
           onTap: () {
             print('I am tapped');
           },
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),
-                  child: icon != null ? Icon(icon, size: 60.0,) : Icon(Icons.cake),
+                  child: icon != null
+                      ? Icon(
+                          icon,
+                          size: 60.0,
+                        )
+                      : Icon(Icons.cake),
                 ),
                 Center(
                   child: Text(
                     name,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display1.copyWith(
-                      color: Colors.grey[70],
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: Theme.of(context).textTheme.headline,
                   ),
                 )
               ],
