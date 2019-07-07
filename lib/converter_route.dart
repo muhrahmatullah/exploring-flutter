@@ -13,7 +13,7 @@ import 'package:flutter_app_sample/unit.dart';
 ///
 /// While it is named ConverterRoute, a more apt name would be ConverterScreen,
 /// because it is responsible for the UI at the route's destination.
-class ConverterRoute extends StatelessWidget {
+class ConverterRoute extends StatefulWidget {
   /// This [Category]'s name.
   final String name;
 
@@ -33,11 +33,18 @@ class ConverterRoute extends StatelessWidget {
         assert(units != null);
 
   @override
+  _ConverterRouteState createState() => _ConverterRouteState();
+}
+
+class _ConverterRouteState extends State<ConverterRoute> {
+  @override
   Widget build(BuildContext context) {
     // Here is just a placeholder for a list of mock units
-    final unitWidgets = units.map((Unit unit) {
+    // TODO: Once the build() function is inside the State object,
+    // you'll have to reference this using `widget.units`
+    final unitWidgets = widget.units.map((Unit unit) {
       return Container(
-        color: color,
+        color: widget.color,
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(16.0),
         child: Column(
