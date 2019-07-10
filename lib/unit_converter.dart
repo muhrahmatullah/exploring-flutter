@@ -188,7 +188,6 @@ class _UnitConverterState extends State<UnitConverter> {
 
   void _reverseConversion() {
     setState(() {
-      debugger();
       txt.text= _convertedValue;
       _inputValue = double.parse(_convertedValue);
       _updateConversion();
