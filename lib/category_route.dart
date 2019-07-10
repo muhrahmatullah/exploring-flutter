@@ -31,7 +31,6 @@ class CategoryRoute extends StatefulWidget {
 class _CategoryRouteState extends State<CategoryRoute> {
   Category _defaultCategory;
   Category _currentCategory;
-
   // Widgets are supposed to be deeply immutable objects. We can update and edit
   // _categories as we build our app, and when we pass it into a widget's
   // `children` property, we call .toList() on it.
@@ -72,6 +71,16 @@ class _CategoryRouteState extends State<CategoryRoute> {
       'error': Color(0xFF912D2D),
     }),
   ];
+  static const _icons = <String>[
+    'assets/icons/length.png',
+    'assets/icons/area.png',
+    'assets/icons/volume.png',
+    'assets/icons/mass.png',
+    'assets/icons/time.png',
+    'assets/icons/digital_storage.png',
+    'assets/icons/power.png',
+    'assets/icons/currency.png',
+  ];
 
   @override
   Future<void> didChangeDependencies() async {
@@ -87,7 +96,8 @@ class _CategoryRouteState extends State<CategoryRoute> {
   Future<void> _retrieveLocalCategories() async {
     // Consider omitting the types for local variables. For more details on Effective
     // Dart Usage, see https://www.dartlang.org/guides/language/effective-dart/usage
-    final json = DefaultAssetBundle.of(context)
+    final json = DefaultAssetBundle
+        .of(context)
         .loadString('assets/data/regular_units.json');
     final data = JsonDecoder().convert(await json);
     if (data is! Map) {
@@ -96,13 +106,13 @@ class _CategoryRouteState extends State<CategoryRoute> {
     var categoryIndex = 0;
     data.keys.forEach((key) {
       final List<Unit> units =
-          data[key].map<Unit>((dynamic data) => Unit.fromJson(data)).toList();
+      data[key].map<Unit>((dynamic data) => Unit.fromJson(data)).toList();
 
       var category = Category(
         name: key,
         units: units,
         color: _baseColors[categoryIndex],
-        iconLocation: Icons.cake,
+        iconLocation: _icons[categoryIndex],
       );
       setState(() {
         if (categoryIndex == 0) {
@@ -175,7 +185,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
     );
     return Backdrop(
       currentCategory:
-          _currentCategory == null ? _defaultCategory : _currentCategory,
+      _currentCategory == null ? _defaultCategory : _currentCategory,
       frontPanel: _currentCategory == null
           ? UnitConverter(category: _defaultCategory)
           : UnitConverter(category: _currentCategory),
