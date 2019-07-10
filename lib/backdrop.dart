@@ -254,7 +254,6 @@ class _BackdropState extends State<Backdrop>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: widget.currentCategory.color,
         elevation: 0.0,
