@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -125,7 +127,7 @@ class _UnitConverterState extends State<UnitConverter> {
 
   Unit _getUnit(String unitName) {
     return widget.category.units.firstWhere(
-          (Unit unit) {
+      (Unit unit) {
         return unit.name == unitName;
       },
       orElse: null,
@@ -182,6 +184,17 @@ class _UnitConverterState extends State<UnitConverter> {
     );
   }
 
+  TextEditingController txt = TextEditingController();
+
+  void _reverseConversion() {
+    setState(() {
+      debugger();
+      txt.text= _convertedValue;
+      _inputValue = double.parse(_convertedValue);
+      _updateConversion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final input = Padding(
@@ -194,6 +207,7 @@ class _UnitConverterState extends State<UnitConverter> {
           // You can read more about it here: https://flutter.io/text-input
           TextField(
             style: Theme.of(context).textTheme.display1,
+            controller: txt,
             decoration: InputDecoration(
               labelStyle: Theme.of(context).textTheme.display1,
               errorText: _showValidationError ? 'Invalid number entered' : null,
@@ -214,9 +228,12 @@ class _UnitConverterState extends State<UnitConverter> {
 
     final arrows = RotatedBox(
       quarterTurns: 1,
-      child: Icon(
-        Icons.compare_arrows,
-        size: 40.0,
+      child: GestureDetector(
+        onTap: _reverseConversion,
+        child: Icon(
+          Icons.compare_arrows,
+          size: 40.0,
+        ),
       ),
     );
 
