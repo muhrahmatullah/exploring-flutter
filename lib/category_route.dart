@@ -10,8 +10,6 @@ import 'unit.dart';
 import 'backdrop.dart';
 import 'unit_converter.dart';
 
-final _backgroundColor = Colors.green[100];
-
 /// Category Route (screen).
 ///
 /// This is the 'home' screen of the Unit Converter. It shows a header and
